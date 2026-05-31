@@ -70,5 +70,28 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="text-align:center; padding:16px; margin-top:40px; border-top:1px solid #ddd; font-size:14px; color:#555;">
+    실습 수행 일시: <span id="footer-time"></span>
+    &nbsp;│&nbsp; 학번: 2371404
+    &nbsp;│&nbsp; 성명: 허성준
+</footer>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const MM = String(now.getMonth()+1).padStart(2,'0');
+        const dd = String(now.getDate()).padStart(2,'0');
+        const days = ['일','월','화','수','목','금','토'];
+        const day = days[now.getDay()];
+        const hh = String(now.getHours()).padStart(2,'0');
+        const mm = String(now.getMinutes()).padStart(2,'0');
+        const ss = String(now.getSeconds()).padStart(2,'0');
+        document.getElementById('footer-time').textContent =
+            `${yyyy}년 ${MM}월 ${dd}일 (${day}) ${hh}:${mm}:${ss}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+</script>
 </body>
 </html>
