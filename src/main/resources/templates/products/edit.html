@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 수정 - HanSung</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .navbar { background: linear-gradient(90deg, #1a1a2e, #0f3460); }
+    .navbar-brand { font-weight: 800; color: #e94560 !important; font-size: 1.4rem; }
+    .page-header { border-left: 4px solid #e94560; padding-left: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/home}">HanSung</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" th:href="@{/home}">홈</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/products}">상품 목록</a></li>
+      </ul>
+      <form th:action="@{/logout}" method="post" class="d-flex">
+        <button class="btn btn-outline-light btn-sm px-3">로그아웃</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="max-width:600px;">
+  <div class="page-header mb-4">
+    <h4 class="fw-bold mb-0">상품 수정</h4>
+  </div>
+
+  <!-- 성공 메시지 -->
+  <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+  <div class="card border-0 shadow-sm p-4">
+    <form th:action="@{/products/{id}/edit(id=${productId})}" method="post">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">상품명</label>
+        <input type="text" name="name" class="form-control"
+               th:value="${productDto.name}" required/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">가격</label>
+        <input type="number" name="price" class="form-control"
+               th:value="${productDto.price}" required/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">재고</label>
+        <input type="number" name="stock" class="form-control"
+               th:value="${productDto.stock}" required/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">설명</label>
+        <textarea name="description" class="form-control" rows="3"
+                  th:text="${productDto.description}"></textarea>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger px-4">수정 완료</button>
+        <a th:href="@{/products}" class="btn btn-outline-secondary">취소</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<footer style="text-align:center; padding:16px; margin-top:40px; border-top:1px solid #ddd; font-size:14px; color:#555;">
+  실습 수행 일시: <span id="footer-time"></span>
+  &nbsp;│&nbsp; 학번: 2371404
+  &nbsp;│&nbsp; 성명: 허성준
+</footer>
+<script>
+  function updateTime() {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const MM = String(now.getMonth()+1).padStart(2,'0');
+    const dd = String(now.getDate()).padStart(2,'0');
+    const days = ['일','월','화','수','목','금','토'];
+    const day = days[now.getDay()];
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('footer-time').textContent =
+            `${yyyy}년 ${MM}월 ${dd}일 (${day}) ${hh}:${mm}:${ss}`;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
+</body>
+</html>
